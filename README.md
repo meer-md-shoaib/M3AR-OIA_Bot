@@ -51,6 +51,18 @@ For instant command-line conversations without opening a browser:
 python cli_chat.py
 ```
 
+### 👥 The Team: M³AR 
+* **M**eer
+* **M**anoj
+* **M**aitri
+* **A**mulya
+* **R**ashmi
+
+---
+
+## 🚀 Project Overview
+This repository houses the source code for our International Affairs Chatbot. The system utilizes Natural Language Processing (NLP) to assist users with diplomatic inquiries, department guidelines, and international policy routing.
+
 ---
 
 ## 💬 Sample Inquiries Handled
