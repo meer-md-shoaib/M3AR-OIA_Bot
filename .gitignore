@@ -11,11 +11,10 @@ env/
 .pytest_cache/
 .gradio/
 flagged/
+data/chroma_db/
 
 # OS generated files
 .DS_Store
 Thumbs.db
 *.tmp
-
-# ChromaDB local index
-data/chroma_db/
+scratch/

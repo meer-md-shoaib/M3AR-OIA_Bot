@@ -1,46 +1,130 @@
 {
   "images": [
     {
-      "filename": "presidency_fountain_campus.jpeg",
-      "title": "Presidency University Bengaluru - Aerial Campus & Central Fountain",
-      "tags": ["campus", "fountain", "aerial", "building", "exterior", "architecture", "garden", "greenery", "entrance", "infrastructure"],
-      "description": "Aerial scenic panoramic view of Presidency University Bengaluru campus featuring the grand central circular fountain, landscaped gardens, and modern academic blocks.",
-      "topics": ["campus life", "campus", "infrastructure", "facilities", "environment", "location", "overview", "view", "photo", "what does the campus look like"]
-    },
-    {
       "filename": "1.jpeg",
       "title": "Office of International Affairs - Main Entrance",
       "tags": ["entrance", "office", "oia", "exterior", "helpdesk", "reception", "building"],
       "description": "Presidency University Office of International Affairs front entrance with modern blue facade and outdoor consultation seating area.",
-      "topics": ["office", "contact", "location", "visit", "administrative block", "hours", "helpdesk"]
+      "topics": ["office", "contact", "location", "visit", "administrative block", "hours", "helpdesk", "entrance", "building", "where is"]
     },
     {
       "filename": "2.jpeg",
       "title": "International Student Visitor Lounge & Reception",
       "tags": ["lounge", "waiting area", "reception", "chairs", "amenities", "indoor", "seating"],
       "description": "Dedicated international student visitor lounge with contemporary blue and orange seating, brochure stands, and inquiry tables.",
-      "topics": ["campus life", "student support", "amenities", "lounge", "waiting room", "facilities", "orientation"]
+      "topics": ["campus life", "student support", "amenities", "lounge", "waiting room", "facilities", "orientation", "relax", "seating", "reception"]
     },
     {
       "filename": "3.jpeg",
       "title": "Taiwan Education Center (TECC) Plaque & Collaboration",
       "tags": ["taiwan", "tecc", "collaboration", "inauguration", "embassy", "mou", "plaque"],
       "description": "Taiwan Education Center India at Presidency University, inaugurated by H.E. Ambassador Baushuan Ger (Representative, TECC in India) in presence of Chancellor Nissar Ahmed.",
-      "topics": ["international collaborations", "taiwan", "tecc", "mou", "partnerships", "exchange", "diplomatic ties"]
+      "topics": ["international collaborations", "taiwan", "tecc", "mou", "partnerships", "exchange", "diplomatic ties", "mandarin", "plaque", "ambassador"]
     },
     {
       "filename": "4.jpeg",
       "title": "Global Partner Universities & Collaborations Wall",
       "tags": ["partners", "universities", "global", "mou", "exchange", "logos", "collaborations"],
       "description": "Official partner institutions display board showing 165+ global partner universities including Drexel, Iowa State, UT Arlington, Heriot-Watt, POLIMI, SKEMA, and Frankfurt School.",
-      "topics": ["international collaborations", "partners", "study abroad", "dual degree", "exchange programs", "mou", "universities"]
+      "topics": ["international collaborations", "partners", "study abroad", "dual degree", "exchange programs", "mou", "universities", "partner universities", "global"]
     },
     {
       "filename": "5.jpeg",
       "title": "OIA Counseling & International Advisory Cabins",
       "tags": ["counseling", "advising", "office", "consultation", "visa desk", "interior", "admissions"],
       "description": "Office of International Affairs internal advisory cabins for 1-on-1 student counseling on admissions, S-Visa processing, and FRRO clearance.",
-      "topics": ["counseling", "visa", "frro", "admissions", "advisor", "guidance", "consultation", "desk"]
+      "topics": ["counseling", "visa", "frro", "admissions", "advisor", "guidance", "consultation", "desk", "advisory", "one on one"]
+    },
+    {
+      "filename": "6.jpeg",
+      "title": "Confluence - Global Convention Center & International Atrium",
+      "tags": ["confluence", "convention", "atrium", "global minds", "flags", "pavilion", "auditorium"],
+      "description": "Presidency University Confluence global convention atrium featuring flags of partner nations, architectural white geometric trusses, and international symposium venue.",
+      "topics": ["confluence", "global minds", "convention center", "atrium", "flags", "symposium", "conference", "events", "auditorium", "seminar"]
+    },
+    {
+      "filename": "7.jpeg",
+      "title": "International Delegation Conference & Boardroom",
+      "tags": ["boardroom", "conference", "delegation", "meeting", "mou signing", "diplomatic", "video conference"],
+      "description": "Executive diplomatic boardroom equipped with video conferencing and partner country flags for high-level university delegation meetings and academic MoU signings.",
+      "topics": ["delegation", "boardroom", "conference room", "meeting room", "mou signing", "video conference", "diplomatic", "roundtable", "executive"]
+    },
+    {
+      "filename": "8.jpeg",
+      "title": "International Partner Nations & National Flags Display",
+      "tags": ["flags", "partner nations", "countries", "usa", "uk", "taiwan", "germany", "france", "south korea", "australia", "canada"],
+      "description": "Official display of national flags representing 50+ partner countries with active student exchange, dual degrees, and diplomatic ties with Presidency University.",
+      "topics": ["flags", "partner nations", "countries", "international countries", "usa", "uk", "taiwan", "germany", "france", "south korea", "australia", "canada", "diplomacy"]
+    },
+    {
+      "filename": "9.jpeg",
+      "title": "Confluence Hall Entrance & Floral Archway",
+      "tags": ["confluence", "entrance", "archway", "flowers", "promenade", "event hall", "reception"],
+      "description": "Entrance promenade to the Confluence international convention venue decorated with ceremonial floral archways and international branding for university events.",
+      "topics": ["confluence entrance", "floral archway", "event hall", "promenade", "walkway", "ceremonial", "corridor", "reception"]
+    },
+    {
+      "filename": "10.jpeg",
+      "title": "International Council Chamber & Delegation Suite",
+      "tags": ["council", "chamber", "delegation", "leadership", "conference", "table", "flags", "chairs"],
+      "description": "Executive conference suite for bilateral discussions between university leadership and visiting international academic partners.",
+      "topics": ["council chamber", "delegation suite", "bilateral meeting", "leadership", "executive meeting", "international council"]
+    },
+    {
+      "filename": "11.jpeg",
+      "title": "International Bilateral Meeting & Executive Boardroom",
+      "tags": ["bilateral", "executive", "meeting", "boardroom", "chairs", "wood ceiling", "flags"],
+      "description": "State-of-the-art international boardroom featuring wood-slat acoustic ceilings, ergonomic mesh seating, and bilateral country flags.",
+      "topics": ["bilateral meeting", "executive boardroom", "meeting room", "international suite", "boardroom", "conference"]
+    },
+    {
+      "filename": "12.jpeg",
+      "title": "Confluence International Convention Center Entrance",
+      "tags": ["confluence", "convention center", "entrance", "glass facade", "floral arch", "steel structure"],
+      "description": "Grand entrance to the Confluence International Convention Center, featuring a ceremonial floral archway, modern steel arch structures, and flags of global partner nations.",
+      "topics": ["confluence", "convention center", "grand entrance", "global minds", "glass facade", "event hall", "venue"]
+    },
+    {
+      "filename": "13.jpeg",
+      "title": "Confluence Promenade & Botanical Indoor Garden",
+      "tags": ["garden", "botanical", "plants", "anthurium", "greenery", "atrium", "architecture"],
+      "description": "Landscaped botanical planters with anthurium blooms in the Confluence atrium, showcasing Presidency University's green campus architecture.",
+      "topics": ["botanical garden", "indoor garden", "plants", "flowers", "green campus", "anthurium", "atrium", "promenade", "landscape"]
+    },
+    {
+      "filename": "14.jpeg",
+      "title": "Office of International Affairs Courtyard & Shaded Patio",
+      "tags": ["courtyard", "patio", "aerial view", "oia", "exterior", "outdoor seating", "architecture"],
+      "description": "Aerial view of the OIA building featuring open-air consultation tables, modern blue exterior facade, and shaded courtyard.",
+      "topics": ["courtyard", "patio", "outdoor seating", "aerial view", "oia building", "exterior", "shaded courtyard", "consultation area"]
+    },
+    {
+      "filename": "15.jpeg",
+      "title": "Presidency University OIA Campus Gardens & Frontal View",
+      "tags": ["campus gardens", "green lawns", "landscape", "exterior", "oia building", "steps", "greenery"],
+      "description": "Wide landscaped garden view of the Office of International Affairs building showing manicured greenery, consultation patio, and architectural canopies.",
+      "topics": ["campus gardens", "green lawns", "landscape", "oia frontal view", "garden view", "steps", "lush green", "campus"]
+    },
+    {
+      "filename": "16.jpeg",
+      "title": "Office of International Affairs Courtyard & Glass Pavilion",
+      "tags": ["courtyard", "pavilion", "oia", "entrance", "exterior", "garden", "water feature", "outdoor seating"],
+      "description": "Panoramic view of Presidency University's OIA courtyard, outdoor student discussion area, and second-floor diplomatic glass pavilion.",
+      "topics": ["courtyard", "glass pavilion", "panoramic view", "oia courtyard", "water feature", "discussion area", "campus view"]
+    },
+    {
+      "filename": "campus_banner_2.jpeg",
+      "title": "FICCI Higher Education Excellence Award - University of the Year",
+      "tags": ["award", "ficci", "university of the year", "excellence", "trophy", "certificate", "ranking", "emerging university"],
+      "description": "Presidency University, Bengaluru honored as the Winner of University of the Year (Emerging University) at the prestigious FICCI Higher Education Excellence Awards.",
+      "topics": ["award", "excellence", "ficci", "university of the year", "trophy", "certificate", "ranking", "achievement", "honour", "winner", "quality"]
+    },
+    {
+      "filename": "presidency_campus_bg.jpeg",
+      "title": "Presidency University Main Campus Portal & B-School National Rankings",
+      "tags": ["main campus", "portal", "gateway", "b-school", "management", "rankings", "ghrdc", "star trophy", "entrance"],
+      "description": "Presidency University main campus architectural entry gateway and national rankings (#5 South India, #15 Pan India in GHRDC B-School survey).",
+      "topics": ["main campus", "campus portal", "main gate", "b-school", "management", "rankings", "ghrdc", "survey", "top 5", "star trophy", "gateway"]
     }
   ]
 }

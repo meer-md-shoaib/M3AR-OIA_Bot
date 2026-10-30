@@ -1,4 +1,4 @@
-﻿# 🎓 Presidency University - Office of International Affairs (OIA) AI Counselor
+# 🎓 Presidency University - Office of International Affairs (OIA) AI Counselor
 
 A high-speed, lightweight conversational AI chatbot built with **Hugging Face Transformers Pipeline**, **Qwen2.5-0.5B-Instruct**, **FAISS Semantic RAG**, and **Multimodal Campus Photo Integration**. Specifically engineered for the **Office of International Affairs (OIA) at Presidency University, Bengaluru**, to assist prospective and enrolled international students with admissions, visa guidelines, e-FRRO compliance, global partner collaborations, fee payments, and campus life.
 
@@ -7,7 +7,11 @@ A high-speed, lightweight conversational AI chatbot built with **Hugging Face Tr
 ## ⚡ Key System Features
 
 - **⚡ Real-Time Token Streaming**: High-speed, responsive token generation via `TextIteratorStreamer` with conversational turns streaming directly to students.
-- **🔍 Dense Semantic RAG (FAISS + SentenceTransformers)**: Indexes multi-source knowledge including university knowledge entries, official scraped web pages, and ingested handbooks using `all-MiniLM-L6-v2` and `faiss.IndexFlatIP`.
+- **🔍 ChromaDB Vector Database & Semantic RAG**: Persistent vector database storage (`data/chroma_db`) indexing multi-source knowledge (structured entries, scraped web pages, handbooks) using `chromadb` with cosine distance and multi-tier fallback.
+- **🔄 Complete 3-Stage RAG Pipeline**:
+  - **1. Retrieval**: ChromaDB semantic nearest-neighbor search extracting high-relevance university facts.
+  - **2. Augmentation**: Contextual prompt engineering injecting official policies, mandatory 14-day e-FRRO compliance, and history.
+  - **3. Generation**: Real-time token streaming and grounded response synthesis.
 - **📸 Multimodal Campus Photo Support**: Automatically tags and retrieves relevant verified campus photos, international lounge areas, TECC plaques, and global partner collaboration walls matching student queries.
 - **🌐 Web Scraper & Ingestion Pipeline**: Scrapes live international collaborations directly from the university portal (`scraper.py`) and extracts text from PDFs (`pdf_ingester.py`).
 - **🎯 LoRA Fine-Tuning Pipeline**: Standalone dataset generator (`dataset_builder.py`) and ready-to-run Google Colab notebook (`finetune_colab.ipynb`) using PEFT, SFTTrainer, and 4-bit NF4 quantization on a free T4 GPU.
@@ -29,9 +33,9 @@ M3AR-OIA_Bot/
 │   ├── collaborations.txt       # Scraped from live university collaborations portal
 │   └── *.txt                    # Extracted plain text from ingested PDFs
 ├── app.py                       # Modern Gradio Web UI with streaming & photo display
-├── bot_engine.py                # Core engine with streaming, FAISS RAG & quantization
-├── semantic_retriever.py        # FAISS dense vector retriever (all-MiniLM-L6-v2)
-├── retriever.py                 # Keyword-overlap retriever (fallback baseline)
+├── bot_engine.py                # Core engine: ChromaDB RAG, prompt augmentation & token streaming
+├── semantic_retriever.py        # ChromaDB persistent vector database retriever
+├── retriever.py                 # RAG pipeline module (Retrieval, Augmentation, Generation)
 ├── image_matcher.py             # Topic & tag relevance scorer for campus photos
 ├── scraper.py                   # Web scraper for presidencyuniversity.in international pages
 ├── pdf_ingester.py              # PDF text extraction pipeline using pdfplumber

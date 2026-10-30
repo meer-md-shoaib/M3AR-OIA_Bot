@@ -1,4 +1,4 @@
-﻿"""
+"""
 Presidency University - Office of International Affairs (OIA)
 Image Matcher: Dynamically associates user student queries with verified campus, office, and collaboration photos.
 """
@@ -24,26 +24,38 @@ def load_manifest() -> List[Dict[str, Any]]:
         return []
 
 def extract_tokens(text: str) -> set:
-    """Extracts lowercase alphabetic keywords."""
+    """Extracts lowercase alphabetic keywords with basic singular normalization."""
     words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
     stopwords = {
         "the", "and", "for", "with", "that", "this", "what", "how", "can",
-        "are", "have", "from", "you", "your", "about", "tell", "show", "give", "please"
+        "are", "have", "from", "you", "your", "about", "tell", "show", "give", "please", "some"
     }
-    return {w for w in words if w not in stopwords}
+    tokens = set()
+    for w in words:
+        if w in stopwords:
+            continue
+        tokens.add(w)
+        # Add singular form for simple plurals
+        if w.endswith("s") and len(w) > 3:
+            tokens.add(w[:-1])
+        if w.endswith("ies") and len(w) > 4:
+            tokens.add(w[:-3] + "y")
+    return tokens
 
-def find_relevant_images(user_query: str, max_images: int = 2) -> List[str]:
+def find_relevant_images(user_query: str, max_images: int = 3) -> List[str]:
     """
     Scores each image in Photos/ against the user query based on topics, tags, title, and description.
+    Supports broad photo queries like 'show campus photos' or 'all pics'.
     Returns list of absolute or relative file path strings.
     """
     manifest = load_manifest()
     if not manifest:
         return []
 
+    q_lower = user_query.lower()
     query_tokens = extract_tokens(user_query)
-    if not query_tokens:
-        return []
+
+    is_general_photo_req = any(w in q_lower for w in ["photo", "photos", "pic", "pics", "picture", "pictures", "image", "images", "gallery"])
 
     scored_images = []
     for item in manifest:
@@ -60,17 +72,41 @@ def find_relevant_images(user_query: str, max_images: int = 2) -> List[str]:
         title = item.get("title", "").lower()
         desc = item.get("description", "").lower()
 
+        # Score matching tokens
         for token in query_tokens:
             for topic in topics:
                 if token in topic:
-                    score += 4
+                    score += 5
             for tag in tags:
                 if token in tag:
-                    score += 3
+                    score += 4
             if token in title:
-                score += 2
+                score += 3
             if token in desc:
                 score += 1
+
+        # Specific landmark / category bonuses
+        if any(w in q_lower for w in ["confluence", "atrium", "convention", "global minds"]) and any(x in filename for x in ["6.", "9.", "12.", "13."]):
+            score += 15
+        if any(w in q_lower for w in ["flag", "flags", "country", "countries", "nation", "nations"]) and filename == "8.jpeg":
+            score += 20
+        if any(w in q_lower for w in ["boardroom", "delegation", "council", "meeting", "bilateral", "table"]) and any(x in filename for x in ["7.", "10.", "11."]):
+            score += 15
+        if any(w in q_lower for w in ["courtyard", "patio", "exterior", "building", "outside", "garden", "lawn"]) and any(x in filename for x in ["1.", "14.", "15.", "16."]):
+            score += 12
+        if any(w in q_lower for w in ["award", "ficci", "ranking", "rankings", "excellence", "trophy", "winner"]) and filename in ["campus_banner_2.jpeg", "presidency_campus_bg.jpeg"]:
+            score += 20
+        if any(w in q_lower for w in ["main gate", "portal", "b-school", "management", "ghrdc"]) and filename == "presidency_campus_bg.jpeg":
+            score += 20
+
+        # General photo boost if user asked for photos, gallery or all pics
+        if is_general_photo_req:
+            highlight_samples = [
+                "1.jpeg", "6.jpeg", "8.jpeg", "campus_banner_2.jpeg",
+                "3.jpeg", "15.jpeg", "11.jpeg", "presidency_campus_bg.jpeg"
+            ]
+            if filename in highlight_samples:
+                score += (10 - highlight_samples.index(filename))
 
         if score > 0:
             scored_images.append((score, str(img_path)))
