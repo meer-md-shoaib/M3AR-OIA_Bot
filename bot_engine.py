@@ -1,6 +1,6 @@
-﻿"""
+"""
 Presidency University International Office Chatbot Engine.
-Powered by Hugging Face Transformers, Multi-Source FAISS Semantic RAG,
+Powered by Hugging Face Transformers, ChromaDB Semantic Vector Engine,
 Inline Base64 Campus Photo Retrieval, and Real-Time Token Streaming.
 """
 
@@ -16,6 +16,13 @@ from transformers import (
     AutoModelForCausalLM,
     TextIteratorStreamer
 )
+
+try:
+    from chroma_retriever import ChromaRetriever
+    HAS_CHROMA = True
+except Exception as e:
+    print(f"Notice: ChromaRetriever deferred ({e})")
+    HAS_CHROMA = False
 
 from semantic_retriever import SemanticRetriever
 from image_matcher import find_relevant_images, load_manifest
@@ -70,8 +77,16 @@ class InternationalOfficeBot:
         self.device = 0 if torch.cuda.is_available() else -1
         self.device_str = "cuda" if torch.cuda.is_available() else "cpu"
 
-        # 1. Initialize Multi-Source Semantic RAG Retriever
-        self.retriever = SemanticRetriever()
+        # 1. Initialize High-Speed ChromaDB Vector Retriever
+        if HAS_CHROMA:
+            try:
+                self.retriever = ChromaRetriever()
+                print("ChromaDB Vector Retriever loaded successfully.")
+            except Exception as e:
+                print(f"Chroma init failed ({e}); falling back to SemanticRetriever.")
+                self.retriever = SemanticRetriever()
+        else:
+            self.retriever = SemanticRetriever()
 
         # 2. Check 4-bit Quantization availability (BitsAndBytes)
         quantization_config = None
@@ -118,7 +133,6 @@ class InternationalOfficeBot:
             return []
 
         parsed = []
-        # Case 1: Gradio messages format: [{'role': 'user', 'content': ...}, {'role': 'assistant', 'content': ...}]
         if isinstance(history, list) and len(history) > 0 and isinstance(history[0], dict):
             u_temp = None
             for msg in history:
@@ -132,7 +146,6 @@ class InternationalOfficeBot:
                     u_temp = None
             return parsed
 
-        # Case 2: List of tuples/lists: [[user, bot], ...]
         for item in history:
             if isinstance(item, (list, tuple)) and len(item) == 2:
                 user_msg = extract_text_content(item[0])
@@ -141,24 +154,29 @@ class InternationalOfficeBot:
         return parsed
 
     def build_prompt_messages(self, user_message: str, history=None) -> Tuple[List[dict], str, List[str]]:
-        """Retrieves semantic context and relevant images, then builds clean text messages."""
-        # 1. Semantic RAG context
+        """Retrieves ChromaDB semantic context and relevant images, then builds clean text messages."""
+        # 1. ChromaDB semantic context
         clean_user_message = extract_text_content(user_message)
-        retrieved_chunks = self.retriever.retrieve(clean_user_message, top_k=3)
+        retrieved_chunks = self.retriever.retrieve(clean_user_message, top_k=4)
         knowledge_context = "\n\n".join(retrieved_chunks)
 
         # 2. Associated campus photos
         matched_images = find_relevant_images(clean_user_message, max_images=2)
 
-        # 3. Official System Prompt
+        # 3. Official System Prompt grounded with ChromaDB & Reach Us details
         system_prompt = (
             "You are the official AI Counselor for the Office of International Affairs (OIA) at Presidency University, Bengaluru.\n"
             "Your role is to assist prospective international applicants and foreign students warmly, accurately, and clearly.\n"
             "Guidelines:\n"
-            "1. Answer concisely using the official university facts provided in the knowledge context below.\n"
-            "2. When discussing visas, always highlight the mandatory Indian Student Visa (S-Visa) and the strict 14-day e-FRRO registration rule upon landing.\n"
-            "3. If needed, provide the official contact: international@presidencyuniversity.in | Helpline: +91 80 4925 5555.\n\n"
-            f"[OFFICIAL PRESIDENCY UNIVERSITY INFORMATION]:\n{knowledge_context}"
+            "1. Answer accurately and concisely using the official university facts, PDF documents, and live website data provided below.\n"
+            "2. Official Contact & Reach Us:\n"
+            "   - University Board Line: +91 080-23093500, +91 080-44787350\n"
+            "   - Admission Inquiries: +91 9022092222, +91 9024060000 | Email: admission@presidencyuniversity.in\n"
+            "   - Office of International Affairs: international@presidencyuniversity.in, oia.admissions@presidencyuniversity.in | Helpline: +91 80 4925 5555 | WhatsApp: +91 98450 12345\n"
+            "   - College Profile Reference: https://thecollegesphere.com/college/presidency-university-bangalore/\n"
+            "3. When discussing visas, always highlight the mandatory Indian Student Visa (S-Visa) and the strict 14-day e-FRRO registration rule upon landing.\n"
+            "4. When discussing international programs, reference our 165+ partner institutions across 33+ countries, student exchange, master's progression pathways (e.g. Miami University 3.5+1.5), dual degrees, DHIK Germany consortium, TECC Taiwan, and Chancellor's Bon Voyage Scholarship.\n\n"
+            f"[OFFICIAL PRESIDENCY UNIVERSITY & CHROMADB KNOWLEDGE BASE]:\n{knowledge_context}"
         )
 
         messages = [{"role": "system", "content": system_prompt}]
@@ -171,7 +189,7 @@ class InternationalOfficeBot:
             if h_bot:
                 messages.append({"role": "assistant", "content": str(h_bot)})
 
-        # Append current user prompt as pure string
+        # Append current user prompt
         messages.append({"role": "user", "content": str(clean_user_message)})
 
         return messages, knowledge_context, matched_images

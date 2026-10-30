@@ -16,3 +16,6 @@ flagged/
 .DS_Store
 Thumbs.db
 *.tmp
+
+# ChromaDB local index
+data/chroma_db/
