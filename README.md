@@ -1,76 +1,86 @@
-# 🎓 Presidency University - Office of International Affairs (OIA) Chatbot
+﻿# 🎓 Presidency University - Office of International Affairs (OIA) AI Counselor
 
-A high-speed, lightweight conversational AI chatbot built with **Hugging Face Transformers Pipeline** and **Qwen2.5-0.5B-Instruct**. Tailored specifically for the **Office of International Affairs at Presidency University** to assist foreign and international students with admissions, visa regulations, e-FRRO compliance, scholarships, fees, and campus life.
+A high-speed, lightweight conversational AI chatbot built with **Hugging Face Transformers Pipeline**, **Qwen2.5-0.5B-Instruct**, **FAISS Semantic RAG**, and **Multimodal Campus Photo Integration**. Specifically engineered for the **Office of International Affairs (OIA) at Presidency University, Bengaluru**, to assist prospective and enrolled international students with admissions, visa guidelines, e-FRRO compliance, global partner collaborations, fee payments, and campus life.
 
 ---
 
-## ⚡ Key Highlights
+## ⚡ Key System Features
 
-- **Ultra-Fast Generation on CPU**: Powered by `Qwen/Qwen2.5-0.5B-Instruct` (~500M parameters), delivering conversational turns in 1–2 seconds without requiring a dedicated GPU.
-- **Hugging Face `pipeline("text-generation")`**: Clean, modular implementation following Hugging Face best practices.
-- **University Domain Grounding**: Equipped with a curated knowledge base covering:
-  - **Admissions & Eligibility**: AIU equivalence, required certificates, degree eligibility.
-  - **Indian Student Visa (S-Visa)**: Firm acceptance letters, consulate process, S-Visa requirements.
-  - **FRRO / e-FRRO Compliance**: Mandatory 14-day registration, Form C, and university support.
-  - **Scholarships & Aid**: ICCR A2A portal, Study in India (SII), and University International Merit Scholarships.
-  - **Fee Payments**: International wire transfers, SWIFT/IBAN, NRE/NRO accounts.
-  - **Hostels & Amenities**: International student residences, meal plans, medical centers, and emergency contacts.
-- **Two User Interfaces**:
-  1. **Interactive Web UI**: Modern, styled web interface powered by Gradio (`python app.py`).
-  2. **Terminal / CLI Chat**: Direct, instant console session (`python cli_chat.py`).
+- **⚡ Real-Time Token Streaming**: High-speed, responsive token generation via `TextIteratorStreamer` with conversational turns streaming directly to students.
+- **🔍 Dense Semantic RAG (FAISS + SentenceTransformers)**: Indexes multi-source knowledge including university knowledge entries, official scraped web pages, and ingested handbooks using `all-MiniLM-L6-v2` and `faiss.IndexFlatIP`.
+- **📸 Multimodal Campus Photo Support**: Automatically tags and retrieves relevant verified campus photos, international lounge areas, TECC plaques, and global partner collaboration walls matching student queries.
+- **🌐 Web Scraper & Ingestion Pipeline**: Scrapes live international collaborations directly from the university portal (`scraper.py`) and extracts text from PDFs (`pdf_ingester.py`).
+- **🎯 LoRA Fine-Tuning Pipeline**: Standalone dataset generator (`dataset_builder.py`) and ready-to-run Google Colab notebook (`finetune_colab.ipynb`) using PEFT, SFTTrainer, and 4-bit NF4 quantization on a free T4 GPU.
+- **📊 10-Scenario Automated Evaluation Suite**: Golden benchmark accuracy test (`evaluate.py`) measuring keyword recall, visa compliance facts, and grounded responses.
 
 ---
 
 ## 📁 Project Structure
 
 ```
-presidency_international_bot/
-│── app.py             # Gradio Web Interface with Presidency University branding
-│── cli_chat.py        # Interactive Terminal / Command Line Chatbot
-│── bot_engine.py      # Core transformer pipeline & prompt template logic
-│── retriever.py       # Context retrieval engine matching student queries
-│── knowledge.py       # Curated Presidency University International Office knowledge base
-│── requirements.txt   # Dependencies (transformers, torch, gradio)
-└── README.md          # Documentation and usage guide
+M3AR-OIA_Bot/
+├── Photos/
+│   ├── 1.jpeg ... 5.jpeg        # Verified campus & OIA office photos
+│   └── image_manifest.json      # Structured tags, topics & visual descriptions
+├── data/
+│   ├── pdfs/                    # Source PDF repository for student handbooks
+│   └── finetune_dataset.jsonl   # Instruction-tuning pairs generated for LoRA
+├── scraped_data/
+│   ├── collaborations.txt       # Scraped from live university collaborations portal
+│   └── *.txt                    # Extracted plain text from ingested PDFs
+├── app.py                       # Modern Gradio Web UI with streaming & photo display
+├── bot_engine.py                # Core engine with streaming, FAISS RAG & quantization
+├── semantic_retriever.py        # FAISS dense vector retriever (all-MiniLM-L6-v2)
+├── retriever.py                 # Keyword-overlap retriever (fallback baseline)
+├── image_matcher.py             # Topic & tag relevance scorer for campus photos
+├── scraper.py                   # Web scraper for presidencyuniversity.in international pages
+├── pdf_ingester.py              # PDF text extraction pipeline using pdfplumber
+├── dataset_builder.py           # Instruction-tuning JSONL dataset generator
+├── finetune_colab.ipynb         # Complete Colab notebook for LoRA fine-tuning
+├── evaluate.py                  # 10-scenario golden benchmark accuracy evaluation
+├── cli_chat.py                  # Interactive command-line console session
+├── demo_live_chat.py            # Live demonstration benchmark script
+├── knowledge.py                 # Core knowledge base for admissions, visa & FRRO
+├── requirements.txt             # Comprehensive project dependencies
+└── README.md                    # Documentation & operational guide
 ```
 
 ---
 
-## 🚀 Quickstart
+## 🚀 Quickstart Guide
 
 ### 1. Run the Interactive Web UI
-In PowerShell or Terminal, navigate to the directory and run:
 ```bash
 python app.py
 ```
-Then open your browser to **http://127.0.0.1:7860**.
+Open your web browser at **http://127.0.0.1:7860**.
 
 ### 2. Run the Terminal / CLI Chat
-For instant command-line conversations without opening a browser:
 ```bash
 python cli_chat.py
 ```
 
-### 👥 The Team: M³AR 
+### 3. Run Web Scraping & PDF Ingestion
+```bash
+python scraper.py
+python pdf_ingester.py
+```
+
+### 4. Build Fine-Tuning Dataset
+```bash
+python dataset_builder.py
+```
+
+### 5. Run the Automated Evaluation Benchmark
+```bash
+python evaluate.py
+```
+
+---
+
+## 👥 The Team: M³AR
 * **M**eer
 * **M**anoj
 * **M**aitri
 * **A**mulya
 * **R**ashmi
-
----
-
-## 🚀 Project Overview
-This repository houses the source code for our International Affairs Chatbot. The system utilizes Natural Language Processing (NLP) to assist users with diplomatic inquiries, department guidelines, and international policy routing.
-
----
-
-## 💬 Sample Inquiries Handled
-
-- *"What documents do I need to submit for international admission?"*
-- *"How do I apply for an Indian Student Visa (S-Visa)?"*
-- *"What is the 14-day rule for FRRO registration after arriving in India?"*
-- *"Are ICCR and Study in India scholarships accepted at Presidency University?"*
-- *"How do I wire my tuition fees internationally?"*
-- *"What are the hostel accommodations and Form C procedures for foreign students?"*
-
